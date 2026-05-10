@@ -1,11 +1,12 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
+import ForceGraph from "react-force-graph-2d";
 
+import ProjectGraph from "./ProjectGraph"
 interface DashboardProps {
     data : any;
     isDarkMode: boolean;
 }
-
 
 
 export default function Dashboard({data, isDarkMode} : DashboardProps){
@@ -23,13 +24,14 @@ export default function Dashboard({data, isDarkMode} : DashboardProps){
     return(
         <>
             <NavBar isDarkMode={isDarkMode} onSwitchCurrentProject={swtichCurrentProject} onOpenProfileModal={toggleProfileModal}></NavBar>
-        {/* Project graph */}
-        <div>
             {currentProject[0] !== "" &&
             <>
-                <h1 style={{color: isDarkMode ? "#FFFFFF" : "#013220",}}>{currentProject[1]}</h1>
+                <div style={{overflow: "hidden", height: "100vh"}}>
+                    <h1 style={{color: isDarkMode ? "#FFFFFF" : "#013220", padding: '15px'}}>{currentProject[1]}</h1>
+                    <ProjectGraph></ProjectGraph>
+                </div>
             </>}
-        </div>
+            
         </>
     );
 }

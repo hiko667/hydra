@@ -104,12 +104,12 @@ export default function NavBar({firstName = "Name", lastName = "Unknown", profil
                             
                         </nav>
                     </div>
-                    <div className="w-100 d-flex flex-column align-items-center">
+                    <div className="w-100 d-flex flex-column align-items-center" style={{overflow: "hidden"}}>
                         <h3>Projects</h3>
                         <ul className="list-unstyled">
                             {Object.entries(projects).map(([pKey, pName]) => (
                                 <li key={pKey}>
-                                    <button key = {pKey}
+                                    <button
                                         className={`bg-transparent border-0 ${
                                         isDarkMode ? "text-white" : "text-black"
                                         }`}
@@ -122,7 +122,7 @@ export default function NavBar({firstName = "Name", lastName = "Unknown", profil
                                         }}>
                                         {pName}
                                     </button>
-                                    <button  key = {pKey}
+                                    <button
                                         className={`bg-transparent border-0 ${
                                         isDarkMode ? "text-white" : "text-black"
                                         }`}

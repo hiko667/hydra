@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ViewName } from "../App";
 
+
 import {
     Form,
     Button,
@@ -26,6 +27,7 @@ export default function AuthForm({onLoginSuccess, isDarkMode} : AuthFormProps){
         password: "",
         confirmPassword: "",
     });
+    
     const cleanInput = () => {
         setFormData({
             firstName: "",
