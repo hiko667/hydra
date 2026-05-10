@@ -1,0 +1,12 @@
+.spinner-wrapper{
+    width: 12.5vw;
+    animation: spin 2s linear infinite;
+
+}
+
+@keyframes spin {
+    to{
+        transform: rotate(360deg);
+    }
+    
+}
