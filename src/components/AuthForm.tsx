@@ -9,6 +9,7 @@ import {
     Row,
     Col,
 } from "react-bootstrap";
+
 interface LoginDataPayload {
     email : string;
     password : string;
@@ -29,6 +30,7 @@ function stringNvl(argument : any) : string{
     const nvl = argument === null ? "" : argument;
     return nvl;
 }
+
 export default function AuthForm({onLoginSuccess, isDarkMode} : AuthFormProps){
     const [isLogin, setIsLogin] = useState(true);
     
@@ -77,7 +79,8 @@ export default function AuthForm({onLoginSuccess, isDarkMode} : AuthFormProps){
                     localStorage.setItem("password", formData.password);
                 }
                 cleanInput();
-                console.log(result.token);
+                sessionStorage.setItem("token", result.token);
+                onLoginSuccess()
             }
             catch(error){
 
@@ -86,7 +89,19 @@ export default function AuthForm({onLoginSuccess, isDarkMode} : AuthFormProps){
             if(formData.password !== formData.confirmPassword){
                 setIsPasswordError(true);
             }else{
-                //request
+                try{
+                    const data : RegisterDataPayload = {
+                        firstName: formData.firstName,
+                        lastName: formData.lastName,
+                        email: formData.email,
+                        password: formData.password
+                    };
+                    //const response = fetch();
+                    
+                }
+                catch{
+
+                }
                 cleanInput();
                 setIsLogin(true);
             }
