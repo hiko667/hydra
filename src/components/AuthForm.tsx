@@ -9,12 +9,26 @@ import {
     Row,
     Col,
 } from "react-bootstrap";
+interface LoginDataPayload {
+    email : string;
+    password : string;
+}
+interface RegisterDataPayload {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+}
 
 interface AuthFormProps {
     onLoginSuccess: () => void;
     isDarkMode: boolean;
 }
 
+function stringNvl(argument : any) : string{
+    const nvl = argument === null ? "" : argument;
+    return nvl;
+}
 export default function AuthForm({onLoginSuccess, isDarkMode} : AuthFormProps){
     const [isLogin, setIsLogin] = useState(true);
     
@@ -23,8 +37,8 @@ export default function AuthForm({onLoginSuccess, isDarkMode} : AuthFormProps){
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
-        email: "",
-        password: "",
+        email: stringNvl(localStorage.getItem("email")),
+        password: stringNvl(localStorage.getItem("password")),
         confirmPassword: "",
     });
     
@@ -44,13 +58,31 @@ export default function AuthForm({onLoginSuccess, isDarkMode} : AuthFormProps){
         [e.target.name]: e.target.value,
         });
     };
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    async function handleSubmit (e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
         if (isLogin) {
-            console.log("logujemy się");
-            console.log(formData);
-        } else {
+            try{
+                    const data: LoginDataPayload = {
+                    email : formData.email,
+                    password : formData.password
+                };
+                // const response = fetch();
+                //mock token
+                const result = {
+                    status: "success",
+                    token: "fake_token"
+                }
+                if(rememberMe){
+                    localStorage.setItem("email", formData.email);
+                    localStorage.setItem("password", formData.password);
+                }
+                cleanInput();
+                console.log(result.token);
+            }
+            catch(error){
+
+            }
+            } else {
             if(formData.password !== formData.confirmPassword){
                 setIsPasswordError(true);
             }else{
@@ -61,6 +93,7 @@ export default function AuthForm({onLoginSuccess, isDarkMode} : AuthFormProps){
             
         }
     };
+
     return(
         <> 
             <Container className="m-auto">

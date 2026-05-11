@@ -21,14 +21,18 @@ export default function Dashboard({data, isDarkMode} : DashboardProps){
     const toggleProfileModal = () => {
         setIsProfileModal(!isProfileModal);
     }
+    const onNodeClicked = (nodeId : string) => {
+        console.log(nodeId);
+    }
+
     return(
         <>
             <NavBar isDarkMode={isDarkMode} onSwitchCurrentProject={swtichCurrentProject} onOpenProfileModal={toggleProfileModal}></NavBar>
             {currentProject[0] !== "" &&
             <>
-                <div style={{overflow: "hidden", height: "100vh"}}>
+                <div className="bg-transparent flex" style={{overflow: "hidden", height: "100vh"}}>
                     <h1 style={{color: isDarkMode ? "#FFFFFF" : "#013220", padding: '15px'}}>{currentProject[1]}</h1>
-                    <ProjectGraph></ProjectGraph>
+                    <ProjectGraph onNodeClicked={onNodeClicked}></ProjectGraph>
                 </div>
             </>}
             

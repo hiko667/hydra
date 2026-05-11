@@ -1,6 +1,7 @@
+import { useState } from "react";
 import ForceGraph from "react-force-graph-2d";
 
-function genRandomTree(N = 300, reverse = false) {
+const fetchGraph = (graphId : string) => {
     return{
         "nodes": [ 
         { 
@@ -20,13 +21,17 @@ function genRandomTree(N = 300, reverse = false) {
             "target": "id2"
         },
     ]
-    }
+    } 
+}
+interface ProjectGraphProps {
+    
+    onNodeClicked : (nodeId : string) => void;
 }
 
-export default function ProjectGraph(){
+export default function ProjectGraph({onNodeClicked} : ProjectGraphProps){
     return(
         <>
-            <ForceGraph graphData={genRandomTree()} nodeAutoColorBy={"group"} onNodeClick={() => console.log("aaa")}/>
+            <ForceGraph graphData={fetchGraph("n")} nodeAutoColorBy={"group"} onNodeClick={(e) => onNodeClicked(e.id)}/>
         </>
     )
 }

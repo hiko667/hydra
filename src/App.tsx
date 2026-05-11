@@ -28,7 +28,7 @@ function App() {
       }
   }
 
-  const [currentView, setCurrentView] = useState<ViewName>('dashboard');
+  const [currentView, setCurrentView] = useState<ViewName>('auth');
   const [userData, setUserData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -106,9 +106,6 @@ function App() {
                   </div>}
 
                   {!isLoading && (views[currentView] || views['auth'])}
-        </div>
-        <div>
-          
         </div>
     </>
   )
