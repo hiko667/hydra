@@ -27,24 +27,22 @@ interface UserData  {
 }
 
 function App() {
-  const handleLoginSucces = async () => {
-      setIsLoading(true);
-      try{
-        setIsLoading(true);
-        sleep(1000);
-        
-      }
-      catch (error){
-
-      }
-      finally{
-        setIsLoading(false);
-      }
-  }
+  const handleLoginSucces = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+        try {
+            setCurrentView('dashboard');
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, 2000); 
+};
 
   const [currentView, setCurrentView] = useState<ViewName>('auth');
   const [userData, setUserData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
     });
