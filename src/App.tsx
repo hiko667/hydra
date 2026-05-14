@@ -11,19 +11,10 @@ import Dashboard from './components/Dashboard'
 
 export type ViewName = 'auth' | 'dashboard';
 
-function sleep(milliseconds : number) {
-  var start = new Date().getTime();
-  for (var i : number = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
-
-interface UserData  {
-  firstName : string,
-  lastName : string,
-
+export interface UserData  {
+  firstName : string;
+  lastName : string;
+  profilePicture? : string;
 }
 
 function App() {
@@ -31,7 +22,12 @@ function App() {
     setIsLoading(true);
     setTimeout(() => {
         try {
+            const data : UserData= {
+              firstName : "Default",
+              lastName : "Name"        
+            }
             setCurrentView('dashboard');
+            setUserData(data);
         } catch (error) {
             console.error(error);
         } finally {
@@ -41,7 +37,10 @@ function App() {
 };
 
   const [currentView, setCurrentView] = useState<ViewName>('auth');
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData>({
+    firstName : "",
+    lastName : "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";

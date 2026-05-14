@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ForceGraph from "react-force-graph-2d";
+import type {ProjectGraphData} from './Dashboard.tsx'
 
 const fetchGraph = (graphId : string) => {
     return{
@@ -24,7 +25,7 @@ const fetchGraph = (graphId : string) => {
     } 
 }
 interface ProjectGraphProps {
-    
+    graph : ProjectGraphData;
     onNodeClicked : (nodeId : string) => void;
 }
 

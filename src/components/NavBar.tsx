@@ -1,34 +1,32 @@
 import {User, Building2, Plus, Ellipsis} from "lucide-react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+import type { UserData } from "../App";
+import type { ProjectGraphData } from "./Dashboard";
 
 interface NavBarProps {
-    firstName? : string;
-    lastName? : string;
-    profilePicture? : string;
+    data : UserData;
     isDarkMode: boolean;
     onOpenProfileModal?: () => void;
     onOpenOrganizationsModal?: () => void;
     onOpenNewProjectModal?: () => void; 
-    onSwitchCurrentProject: (project : string, projectName : string) => void;
+    onSwitchCurrentProject: (project : number | undefined, projectName : string | undefined) => void;
     onOpenProjectModal?: () => void; 
 }
 
-export default function NavBar({firstName = "Name", lastName = "Unknown", profilePicture = "../../public/placeholder_pfp.webp", 
+export default function NavBar({data, 
     isDarkMode, onOpenProfileModal, onOpenNewProjectModal, onOpenOrganizationsModal, 
     onSwitchCurrentProject, onOpenProjectModal} : NavBarProps){
     
-    const fetchProjects = () => {
-        return {
-            x2137 : "Project A",
-            y2137: "Project B",
-            z2137: "Project C"
-        }
+    const fetchProjects = () : ProjectGraphData[] => {
+        return [{id: 1, name: "Project A"},
+                {id: 2, name: "Project B"}
+            ]
     };
     const handleNewProject = () => {
         console.log("NewProject");
     }
-    const [projects, setProjects] = useState(fetchProjects);
+    const [projects, setProjects] = useState <ProjectGraphData[]>(fetchProjects());
     const updateProjects = () => {
         setProjects(fetchProjects());
     }
@@ -44,7 +42,7 @@ export default function NavBar({firstName = "Name", lastName = "Unknown", profil
                     <div className="d-flex justify-content-center w-100">
                         <button className="bg-transparent border-0">
                             <img className="w-50 rounded-circle justify-center"
-                            src={profilePicture}
+                            src={data.profilePicture === undefined ? "../../public/placeholder_pfp.webp" : data.profilePicture}
                             alt = "Profile Picture"
                             style={{padding: '15px'}}
                             onMouseEnter={(e) => {
@@ -56,7 +54,7 @@ export default function NavBar({firstName = "Name", lastName = "Unknown", profil
                             
                         </button>
                     </div>
-                    <h3>{`${firstName} ${lastName}`} </h3>
+                    <h3>{`${data.firstName} ${data.lastName}`} </h3>
                     <div className="w-100">
                         <nav className={`mb-4 pb-4 border-bottom border-dark d-flex flex-column align-items-center ${
                         isDarkMode ? "border-gray-800" : "border-gray-200"
@@ -107,20 +105,22 @@ export default function NavBar({firstName = "Name", lastName = "Unknown", profil
                     <div className="w-100 d-flex flex-column align-items-center" style={{overflow: "hidden"}}>
                         <h3>Projects</h3>
                         <ul className="list-unstyled">
-                            {Object.entries(projects).map(([pKey, pName]) => (
-                                <li key={pKey}>
+                            
+                            {projects.map((project : ProjectGraphData) => {
+                                return (
+                                <li key={project.id}>
                                     <button
                                         className={`bg-transparent border-0 ${
                                         isDarkMode ? "text-white" : "text-black"
                                         }`}
-                                        onClick={() => onSwitchCurrentProject(pKey, pName)}
+                                        onClick={() => onSwitchCurrentProject(project.id, project.name)}
                                         onMouseEnter={(e) => {
                                             e.currentTarget.style.opacity = "0.5";
                                         }}
                                         onMouseLeave={(e) => {
                                             e.currentTarget.style.opacity = "1";
                                         }}>
-                                        {pName}
+                                        {project.name}
                                     </button>
                                     <button
                                         className={`bg-transparent border-0 ${
@@ -136,7 +136,8 @@ export default function NavBar({firstName = "Name", lastName = "Unknown", profil
                                         <Ellipsis></Ellipsis>
                                     </button>
                                 </li>
-                            ))}
+                        )})}
+
                         </ul>
                         <button
                         className={`mt-6 w-full flex items-center justify-center space-x-2 py-3 px-4 rounded font-medium transition-colors ${
