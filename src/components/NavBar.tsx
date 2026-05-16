@@ -1,6 +1,4 @@
 import {User, Building2, Plus, Ellipsis} from "lucide-react";
-import { forwardRef, useState } from "react";
-import { Button } from "react-bootstrap";
 import type { UserData } from "../App";
 import type { ProjectGraphData } from "./Dashboard";
 

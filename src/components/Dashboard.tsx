@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import NavBar from "./NavBar";
 import NewProjectModal from "./NewProjectModal";
-import ForceGraph from "react-force-graph-2d";
 import type { UserData } from "../App";
 
 import ProjectGraph from "./ProjectGraph"
@@ -13,6 +12,13 @@ interface DashboardProps {
 export interface ProjectGraphData {
     id? : number;
     name? : string;
+}
+
+export interface ProjectNodeData {
+    id : number;
+    name : string;
+    group? : string;
+    description? : string;
 }
 
 let globalProjects : ProjectGraphData[] = [{id: 1, name: "Project A"}, {id: 2, name: "Project B"}]
@@ -27,18 +33,21 @@ export default function Dashboard({data, isDarkMode} : DashboardProps){
     const [isOrganizationsModal, setIsOrganizationsModal] = useState(false);
     const [isNewProjectModal, setIsNewProjectModal] = useState(false);
     const [currentProject, setCurrentProject] = useState<ProjectGraphData>();
+    const [currentNode, setCurrentNode] = useState<ProjectNodeData>();
+    const [isNodeModal, setIsNodeModal] = useState(false);
     const [projects, setProjects] = useState(fetchProjects());
 
-    
     const swtichCurrentProject = (projectKey : number | undefined, projectName : string | undefined) => {
         setCurrentProject({id : projectKey, name : projectName});
     }
     const toggleProfileModal = () => {
         setIsProfileModal(!isProfileModal);
     }
-    const onNodeClicked = (nodeId : string) => {
-        console.log(nodeId);
-    }
+    const onNodeClicked = useCallback((nodeId : number, nodeName : string, nodeGroup : string) => {
+        setIsNodeModal(true);
+        setCurrentNode({id: nodeId, name: nodeName, group : nodeGroup, description : "null"});
+    }, []);
+
     const onNewProject = () => {
         setIsNewProjectModal(true);
     }
@@ -55,8 +64,7 @@ export default function Dashboard({data, isDarkMode} : DashboardProps){
 
                 <div className="bg-transparent flex" style={{overflow: "hidden", height: "100vh"}}>
                     <h1 style={{color: isDarkMode ? "#FFFFFF" : "#013220", padding: '15px'}}>{currentProject.name}</h1> 
-                    <ProjectGraph graph = {currentProject} onNodeClicked={onNodeClicked}></ProjectGraph>
-                    
+                    <ProjectGraph isDarkMode={isDarkMode} graph = {currentProject} onNodeClicked={onNodeClicked}></ProjectGraph>
                 </div>
             </>}
             <NewProjectModal isDarkMode = {isDarkMode} show = {isNewProjectModal} handleNewProject={handleNewProject} 
