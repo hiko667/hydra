@@ -16,14 +16,15 @@ const fetchGraph = (graphId? : number) => {
 interface ProjectGraphProps {
     graph : ProjectGraphData;
     isDarkMode : boolean;
-    onNodeClicked : (nodeId : number, nodeName : string, nodeGroup : string) => void;
+    onNodeClicked : (nodeId : number, nodeName : string, nodeGroup : string, nodeDescription : string) => void;
 }
 
 const ProjectGraph = memo( function ProjectGraph({graph, isDarkMode, onNodeClicked} : ProjectGraphProps){
     const [graphData, setGraphData] = useState(fetchGraph(graph.id));
     const handleNodeClicked = (e : NodeObject<any>) => {
-        onNodeClicked(e.id as number, e.name as string, e.group as string)
+        onNodeClicked(e.id as number, e.name as string, e.group as string, e.description as string);
     }
+    
     useEffect(() => {
         setGraphData(fetchGraph(graph.id))
     }, [graph.id])

@@ -1,10 +1,10 @@
 import { useState, useCallback } from "react";
 import NavBar from "./NavBar";
 import NewProjectModal from "./NewProjectModal";
+import NodeModal from "./NodeModal";
 import type { UserData } from "../App";
 
 import ProjectGraph from "./ProjectGraph"
-
 
 interface DashboardProps {
     data : UserData;
@@ -34,8 +34,8 @@ export default function Dashboard({data, isDarkMode} : DashboardProps){
     const [isProfileModal, setIsProfileModal] = useState(false);
     const [isOrganizationsModal, setIsOrganizationsModal] = useState(false);
     const [isNewProjectModal, setIsNewProjectModal] = useState(false);
-    const [currentProject, setCurrentProject] = useState<ProjectGraphData>();
-    const [currentNode, setCurrentNode] = useState<ProjectNodeData>();
+    const [currentProject, setCurrentProject] = useState<ProjectGraphData>({id: -1, name: ""});
+    const [currentNode, setCurrentNode] = useState<ProjectNodeData>({id: -1, name: "", group: "", description: ""});
     const [isNodeModal, setIsNodeModal] = useState(false);
     const [projects, setProjects] = useState(fetchProjects());
 
@@ -45,9 +45,9 @@ export default function Dashboard({data, isDarkMode} : DashboardProps){
     const toggleProfileModal = () => {
         setIsProfileModal(!isProfileModal);
     }
-    const onNodeClicked = useCallback((nodeId : number, nodeName : string, nodeGroup : string) => {
+    const onNodeClicked = useCallback((nodeId : number, nodeName : string, nodeGroup : string, nodeDescription : string) => {
+        setCurrentNode({id: nodeId, name: nodeName, group : nodeGroup, description : nodeDescription});
         setIsNodeModal(true);
-        setCurrentNode({id: nodeId, name: nodeName, group : nodeGroup, description : "null"});
     }, []);
 
     const onNewProject = () => {
@@ -61,7 +61,7 @@ export default function Dashboard({data, isDarkMode} : DashboardProps){
     return(
         <>
             <NavBar data = {data} isDarkMode={isDarkMode} projects = {projects} onOpenNewProjectModal={onNewProject} onSwitchCurrentProject={swtichCurrentProject} onOpenProfileModal={toggleProfileModal}></NavBar>
-            {currentProject?.id !==undefined &&
+            {currentProject?.id !==-1 &&
             <>
 
                 <div className="bg-transparent flex" style={{overflow: "hidden", height: "100vh"}}>
@@ -69,8 +69,9 @@ export default function Dashboard({data, isDarkMode} : DashboardProps){
                     <ProjectGraph isDarkMode={isDarkMode} graph = {currentProject} onNodeClicked={onNodeClicked}></ProjectGraph>
                 </div>
             </>}
-            <NewProjectModal isDarkMode = {isDarkMode} show = {isNewProjectModal} handleNewProject={handleNewProject} 
+            <NewProjectModal isDarkMode = {isDarkMode} show = {isNewProjectModal} handleNewProject={handleNewProject}
             onHide={() => setIsNewProjectModal(false)} userEmail={data.email}/>
+            <NodeModal isDarkMode={isDarkMode} show = {isNodeModal} onHide={() => setIsNodeModal(false)} project={currentProject} node={currentNode}/>
         </>
     );
 }
