@@ -102,7 +102,7 @@ export const mock_graph = {
     { "source": 3, "target": 4 },
     { "source": 3, "target": 10 },
     { "source": 4, "target": 9 },
-    { "source": 10, "target": 11 },
+    { "source": 4, "target": 11 },
     { "source": 5, "target": 12 },
     { "source": 5, "target": 13 },
     { "source": 5, "target": 14 }
