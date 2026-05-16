@@ -27,6 +27,7 @@ export default function NewProjectModal({show, isDarkMode, onHide, userEmail, ha
     });
     const [errorMessage, setErrorMessage] = useState("Wrong format");
     const [showEmailError, setShowEmailError] = useState(false);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>,) => {
         setFormData({
         ...formData,
@@ -96,7 +97,7 @@ export default function NewProjectModal({show, isDarkMode, onHide, userEmail, ha
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={handleSubmit}>
-                            <Form.Group controlId="newProjectName">
+                            <Form.Group controlId="newProjectName" className="mt-3">
                                 <Form.Label>New Project Name</Form.Label>
                                 <Form.Control
                                 required
@@ -136,7 +137,7 @@ export default function NewProjectModal({show, isDarkMode, onHide, userEmail, ha
 
                                 </Form.Control>
                             </Form.Group>
-                            <Form.Group controlId="bodyNodeName">
+                            <Form.Group controlId="bodyNodeName" className="mt-3">
                                 <Form.Label>Name your body note</Form.Label>
                                 <Form.Control
                                 required
@@ -191,7 +192,7 @@ export default function NewProjectModal({show, isDarkMode, onHide, userEmail, ha
                                     </button></span>
                                 ))}
                             </div>
-                            <Form.Group controlId="email">
+                            <Form.Group controlId="email" className="mt-3">
                                 <Form.Label>Add Contributors</Form.Label>
                                 <Form.Control
                                 type="email"
