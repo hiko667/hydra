@@ -4,12 +4,14 @@ import Form from 'react-bootstrap/Form';
 
 
 interface NodeModalProps{
-    id : number;
-    name : string;
-    group : string;
-    depth : number;
-    description : string;
+    projectId : number;
+    projectName : string;
+    nodeId : number;
+    nodeName : string;
+    nodeGroup : string;
+    nodeDescription? : string;
 }
-export default function NodeModal(){
-
+export default function NodeModal({projectId, projectName, nodeId, nodeName, nodeGroup, nodeDescription} : NodeModalProps){
+    const [isAddingChildren, setIsAddingChildren] = useState(false);
+    
 }

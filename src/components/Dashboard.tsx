@@ -4,6 +4,8 @@ import NewProjectModal from "./NewProjectModal";
 import type { UserData } from "../App";
 
 import ProjectGraph from "./ProjectGraph"
+
+
 interface DashboardProps {
     data : UserData;
     isDarkMode: boolean;
