@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { ViewName } from "../App";
 
 
 import {
@@ -60,7 +59,7 @@ export default function AuthForm({onLoginSuccess, isDarkMode} : AuthFormProps){
         [e.target.name]: e.target.value,
         });
     };
-    async function handleSubmit (e: React.FormEvent<HTMLFormElement>){
+    async function handleSubmit (e: React.ChangeEvent<HTMLFormElement>){
         e.preventDefault();
         if (isLogin) {
             try{

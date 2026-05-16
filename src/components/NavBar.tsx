@@ -1,5 +1,5 @@
 import {User, Building2, Plus, Ellipsis} from "lucide-react";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import type { UserData } from "../App";
 import type { ProjectGraphData } from "./Dashboard";
@@ -9,27 +9,22 @@ interface NavBarProps {
     isDarkMode: boolean;
     onOpenProfileModal?: () => void;
     onOpenOrganizationsModal?: () => void;
-    onOpenNewProjectModal?: () => void; 
+    onOpenNewProjectModal: () => void; 
     onSwitchCurrentProject: (project : number | undefined, projectName : string | undefined) => void;
     onOpenProjectModal?: () => void; 
+    projects : ProjectGraphData[];
 }
+
+
 
 export default function NavBar({data, 
     isDarkMode, onOpenProfileModal, onOpenNewProjectModal, onOpenOrganizationsModal, 
-    onSwitchCurrentProject, onOpenProjectModal} : NavBarProps){
+    onSwitchCurrentProject, onOpenProjectModal, projects} : NavBarProps){
     
-    const fetchProjects = () : ProjectGraphData[] => {
-        return [{id: 1, name: "Project A"},
-                {id: 2, name: "Project B"}
-            ]
-    };
     const handleNewProject = () => {
-        console.log("NewProject");
+        onOpenNewProjectModal();
     }
-    const [projects, setProjects] = useState <ProjectGraphData[]>(fetchProjects());
-    const updateProjects = () => {
-        setProjects(fetchProjects());
-    }
+    
     return(
         <>
             <div className={`min-wh-20 border-end border-dark h-full w-[20%] flex flex-col p-6 border-r ${
@@ -46,10 +41,10 @@ export default function NavBar({data,
                             alt = "Profile Picture"
                             style={{padding: '15px'}}
                             onMouseEnter={(e) => {
-                            e.currentTarget.style.opacity = "0.5";
+                                e.currentTarget.style.opacity = "0.5";
                             }}
                             onMouseLeave={(e) => {
-                            e.currentTarget.style.opacity = "1";
+                                e.currentTarget.style.opacity = "1";
                             }}/>
                             
                         </button>

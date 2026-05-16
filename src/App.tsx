@@ -14,6 +14,7 @@ export type ViewName = 'auth' | 'dashboard';
 export interface UserData  {
   firstName : string;
   lastName : string;
+  email : string;
   profilePicture? : string;
 }
 
@@ -24,7 +25,8 @@ function App() {
         try {
             const data : UserData= {
               firstName : "Default",
-              lastName : "Name"        
+              lastName : "Name",
+              email: "ala@kot.pl"      
             }
             setCurrentView('dashboard');
             setUserData(data);
@@ -40,6 +42,7 @@ function App() {
   const [userData, setUserData] = useState<UserData>({
     firstName : "",
     lastName : "",
+    email : ""
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
